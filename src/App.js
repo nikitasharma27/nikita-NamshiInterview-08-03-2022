@@ -1,27 +1,32 @@
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import './App.css';
-import Matrix from './components/Matrix';
+// import Matrix from './components/Matrix';
+import Shopping from './components/Shopping';
 
-// var matrix = [];
-// var matrix
+const App = () => {
 
-// rows
-// for (var i = 0; i < 6; ++i) {
-//     axes.push(self.board[i]);
-// }
-// // columns
-// for (var j = 0; j < 6; ++j) {
-//     var column = [];
-//     for (var i = 0; i < 6; ++i) {
-//         column.push(self.board[i][j]);
-//     }
-// }
-// // diagonals
-// axes.push([self.board[0][1], self.board[1][2]]);
+  const [products, getProducts] = useState([]);
 
-function App() {
+  const fetchProducts = () => {
+
+    fetch('https://fakestoreapi.com/products')
+          .then(res=>res.json())
+          .then(json=> {
+            const products = json;
+            getProducts(products);
+            console.log(products);
+          })
+  }
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   return (
     <div className="App">
-      <Matrix></Matrix>
+      <Shopping products={products}></Shopping>
+      {/* <Matrix></Matrix> */}
     </div>
   );
 }
